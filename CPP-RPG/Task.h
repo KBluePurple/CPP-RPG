@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include "GlobalStd.h"
 #include "Generator.h"
 #include "Time.h"
 

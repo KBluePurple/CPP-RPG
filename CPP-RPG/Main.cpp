@@ -1,5 +1,9 @@
-﻿#include "Global.h"
+﻿#include "GlobalStd.h"
 #include "Main.h"
+#include "Console.h"
+#include "Game.h"
+
+using namespace chrono;
 
 void Initialize()
 {

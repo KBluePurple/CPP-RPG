@@ -1,6 +1,7 @@
 ﻿#include "Game.h"
 #include "TitleScene.h"
 #include "GameScene.h"
+#include "Console.h"
 
 void Game::Initialize()
 {

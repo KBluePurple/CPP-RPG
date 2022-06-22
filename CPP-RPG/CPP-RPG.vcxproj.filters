@@ -45,13 +45,7 @@
     <ClCompile Include="Type.cpp">
       <Filter>소스 파일\Header</Filter>
     </ClCompile>
-    <ClCompile Include="Task.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Action.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Time.cpp">
@@ -69,6 +63,15 @@
     <ClCompile Include="jsoncpp.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Note.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Console.h">
@@ -83,22 +86,13 @@
     <ClInclude Include="Type.h">
       <Filter>헤더 파일\Header</Filter>
     </ClInclude>
-    <ClInclude Include="Global.h">
+    <ClInclude Include="GlobalStd.h">
       <Filter>헤더 파일\Header</Filter>
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Task.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Action.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Generator.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Time.h">
@@ -117,6 +111,15 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="json\json-forwards.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Note.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

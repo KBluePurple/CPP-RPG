@@ -1,25 +1,23 @@
 #pragma once
 
 #include <iostream>
+#include <fstream>
 #include <Windows.h>
 #include <math.h>
-#include <coroutine>
 #include <vector>
-#include <functional>
 #include <utility>
 #include <exception>
 #include <chrono>
 #include <time.h>
 #include <conio.h>
+#include <Digitalv.h>
+#include <string>
+#include <algorithm>
+#include "json/json.h"
+
 #pragma comment(lib, "user32")
+#pragma comment(lib, "winmm.lib")
 
 using namespace std;
 
-#include "Type.h"
-#include "Console.h"
-#include "Task.h"
-#include "Game.h"
-#include "Action.h"
-#include "Time.h"
-#include "Task.h"
-#include "Generator.h"
+#include "Type.h";
