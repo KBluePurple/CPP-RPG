@@ -20,12 +20,12 @@ public:
 class MenuScene : public Scene
 {
 private:
-	int speed;
+	int speed = 420;
 	vector<Map> maps;
 	bool keys[6];
 	
 	void DifficultySelect(Map map);
-	void LoadScene(wstring mp3File, string mapFile);
+	void LoadScene(wstring mp3File, string mapFile, Map map, int selected);
 	
 public:
 	virtual void Initialize() override;

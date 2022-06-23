@@ -104,7 +104,7 @@ void MenuScene::DifficultySelect(Map map)
 			{
 				Console::SetTextColor({ 0, 255, 0 });
 			}
-			cout << map.title << "-" << map.difficulties[i].difficulty;
+			cout << map.title << " - " << map.difficulties[i].difficulty;
 			Console::SetTextColor(Color::DefaultForgroundColor);
 		}
 
@@ -125,16 +125,20 @@ void MenuScene::DifficultySelect(Map map)
 			}
 			break;
 		case VK_RETURN:
-			LoadScene(map.mp3File, map.difficulties[selected].mapFile);
+			LoadScene(map.mp3File, map.difficulties[selected].mapFile, map, selected);
+			Console::Clear();
+			return;
 			break;
 		}
 	}
 }
 
-	void MenuScene::LoadScene(wstring mp3File, string mapFile)
+	void MenuScene::LoadScene(wstring mp3File, string mapFile, Map map, int selected)
 	{
 		Console::Clear();
-		GameScene gameScene = GameScene(mp3File, mapFile, speed);
+		string str = map.title + " - " + map.difficulties[selected].difficulty;;
+		wstring wstr = wstring(str.begin(), str.end());
+		GameScene gameScene = GameScene(wstr, mp3File, mapFile, speed);
 		gameScene.Initialize();
 		gameScene.Run();
 	}

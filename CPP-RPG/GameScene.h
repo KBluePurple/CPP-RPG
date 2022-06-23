@@ -25,7 +25,7 @@ typedef struct
 class GameScene : public Scene
 {
 public:
-	GameScene(wstring mp3File, string mapFile, int speed);
+	GameScene(wstring mapName, wstring mp3File, string mapFile, int speed);
 	
 private:
 	int offset = 450;
@@ -44,6 +44,7 @@ private:
 	string str = "";
 	
 	wstring mp3File;
+	wstring mapName;
 	string mapFile;
 
 	Color lineColor[4];
@@ -63,6 +64,7 @@ private:
 	void ComboBreak();
 	void AddLife(int life);
 	void ShowEffect(int type, int line);
+	Color ColorGradiant(int life);
 
 public:
 	bool IsEnded = false;

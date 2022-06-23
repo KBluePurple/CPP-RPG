@@ -4,7 +4,7 @@
 
 float fps = 0;
 
-Color ColorGradiant(int life)
+Color GameScene::ColorGradiant(int life)
 {
 	life = 100 - life;
 	
@@ -58,6 +58,7 @@ void GameScene::Initialize()
 	lineColor[3] = Color::DefaultForgroundColor;
 
 	musicTime = -offset;
+	life = 100;
 
 	for (int i = 0; i < 15; i++)
 	{
@@ -92,8 +93,9 @@ void GameScene::ComboBreak()
 	life -= 5;
 }
 
-GameScene::GameScene(wstring mp3File, string mapFile, int speed)
+GameScene::GameScene(wstring mapName, wstring mp3File, string mapFile, int speed)
 {
+	this->mapName = mapName;
 	this->mp3File = mp3File;
 	this->mapFile = mapFile;
 	this->offset = speed;
@@ -185,7 +187,9 @@ void GameScene::Update()
 		musicAudio.Close();
 
 		Console::Clear();
-		
+
+		Console::SetCursorPosition({ 0, 23 });
+		Console::AlignedPrint(TextAlign::Center, mapName);
 		Console::SetCursorPosition({ 0, 25 });
 		Console::AlignedPrint(TextAlign::Center, L"Game Over");
 		Console::SetCursorPosition({ 0, 27 });
@@ -193,7 +197,38 @@ void GameScene::Update()
 		Console::SetCursorPosition({ 0, 28 });
 		Console::AlignedPrint(TextAlign::Center, L"Max Combo: " + to_wstring(maxCombo));
 
-		Console::SetCursorPosition({ 0, 30 });
+		Console::SetCursorPosition({ 91, 30 });
+		Console::SetBackgroundColor({ 255, 255, 255 });
+		cout << "  ";
+		Console::SetBackgroundColor(Color::DefaultBackgroundColor);
+		cout << " Marv: " << judgeStore[0];
+		Console::SetCursorPosition({ 91, 32 });
+		Console::SetBackgroundColor({ 245, 197, 66 });
+		cout << "  ";
+		Console::SetBackgroundColor(Color::DefaultBackgroundColor);
+		cout << " Perf: " << judgeStore[1];
+		Console::SetCursorPosition({ 91, 34 });
+		Console::SetBackgroundColor({ 7, 199, 0 });
+		cout << "  ";
+		Console::SetBackgroundColor(Color::DefaultBackgroundColor);
+		cout << " Great: " << judgeStore[2];
+		Console::SetCursorPosition({ 91, 36 });
+		Console::SetBackgroundColor({ 0, 69, 173 });
+		cout << "  ";
+		Console::SetBackgroundColor(Color::DefaultBackgroundColor);
+		cout << " Good: " << judgeStore[3];
+		Console::SetCursorPosition({ 91, 38 });
+		Console::SetBackgroundColor({ 74, 74, 74 });
+		cout << "  ";
+		Console::SetBackgroundColor(Color::DefaultBackgroundColor);
+		cout << " Okay: " << judgeStore[4];
+		Console::SetCursorPosition({ 91, 40 });
+		Console::SetBackgroundColor({ 189, 0, 0 });
+		cout << "  ";
+		Console::SetBackgroundColor(Color::DefaultBackgroundColor);
+		cout << " Miss: " << judgeStore[5];
+		
+		Console::SetCursorPosition({ 0, 42 });
 		Console::AlignedPrint(TextAlign::Center, L"Press [ Enter ] to continue");
 		
 		while (true)
@@ -339,17 +374,35 @@ void GameScene::Render()
 	cout << "MaxCombo: " << maxCombo;
 
 	Console::SetCursorPosition({ 100, 30 });
-	cout << "Marv: " << judgeStore[0];
+	Console::SetBackgroundColor({ 255, 255, 255 });
+	cout << "  ";
+	Console::SetBackgroundColor(Color::DefaultBackgroundColor);
+	cout << " Marv: " << judgeStore[0];
 	Console::SetCursorPosition({ 100, 32 });
-	cout << "Perf: " << judgeStore[1];
+	Console::SetBackgroundColor({ 245, 197, 66 });
+	cout << "  ";
+	Console::SetBackgroundColor(Color::DefaultBackgroundColor);
+	cout << " Perf: " << judgeStore[1];
 	Console::SetCursorPosition({ 100, 34 });
-	cout << "Great: " << judgeStore[2];
+	Console::SetBackgroundColor({ 7, 199, 0 });
+	cout << "  ";
+	Console::SetBackgroundColor(Color::DefaultBackgroundColor);
+	cout << " Great: " << judgeStore[2];
 	Console::SetCursorPosition({ 100, 36 });
-	cout << "Good: " << judgeStore[3];
+	Console::SetBackgroundColor({ 0, 69, 173 });
+	cout << "  ";
+	Console::SetBackgroundColor(Color::DefaultBackgroundColor);
+	cout << " Good: " << judgeStore[3];
 	Console::SetCursorPosition({ 100, 38 });
-	cout << "Okay: " << judgeStore[4];
+	Console::SetBackgroundColor({ 74, 74, 74 });
+	cout << "  ";
+	Console::SetBackgroundColor(Color::DefaultBackgroundColor);
+	cout << " Okay: " << judgeStore[4];
 	Console::SetCursorPosition({ 100, 40 });
-	cout << "Miss: " << judgeStore[5];
+	Console::SetBackgroundColor({ 189, 0, 0 });
+	cout << "  ";
+	Console::SetBackgroundColor(Color::DefaultBackgroundColor);
+	cout << " Miss: " << judgeStore[5];
 
 	for (auto effect : effects)
 	{
