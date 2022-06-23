@@ -1,6 +1,6 @@
 ﻿#include "Game.h"
 #include "TitleScene.h"
-#include "GameScene.h"
+#include "MenuScene.h"
 #include "Console.h"
 
 void Game::Initialize()
@@ -10,12 +10,19 @@ void Game::Initialize()
 
 void Game::MainTask()
 {
-    TitleScene titleScene;
-	titleScene.Initialize();
-	titleScene.Run();
-	Console::Clear();
+	while (true)
+	{
+		TitleScene titleScene = TitleScene();
+		titleScene.Initialize();
+		titleScene.Run();
+		Console::Clear();
 
-	GameScene gameScene;
-	gameScene.Initialize();
-	gameScene.Run();
+		while (true)
+		{
+			MenuScene menuScene = MenuScene();
+			menuScene.Initialize();
+			menuScene.Run();
+			Console::Clear();
+		}
+	}
 }

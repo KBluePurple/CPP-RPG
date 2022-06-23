@@ -4,6 +4,7 @@
 #include "Note.h"
 #include "Type.h"
 #include "Audio.h"
+#include "Effect.h"
 
 typedef enum
 {
@@ -23,8 +24,11 @@ typedef struct
 
 class GameScene : public Scene
 {
+public:
+	GameScene(wstring mp3File, string mapFile, int speed);
+	
 private:
-	int offset = 800;
+	int offset = 450;
 	int musicTime = 0;
 	int noteIndex = 0;
 	int score = 0;
@@ -38,6 +42,9 @@ private:
 	int totalTime = 0;
 
 	string str = "";
+	
+	wstring mp3File;
+	string mapFile;
 
 	Color lineColor[4];
 
@@ -47,6 +54,7 @@ private:
 
 	vector<NoteItem> notes;
 	vector<Note> noteObjects;
+	vector<Effect> effects;
 
 	Audio musicAudio;
 
@@ -54,8 +62,11 @@ private:
 	int GetMusicTime();
 	void ComboBreak();
 	void AddLife(int life);
+	void ShowEffect(int type, int line);
 
 public:
+	bool IsEnded = false;
+	
 	void Initialize() override;
 	void Run() override;
 	void Update() override;

@@ -4,9 +4,26 @@
 
 float fps = 0;
 
+Color ColorGradiant(int life)
+{
+	life = 100 - life;
+	
+	Color startColor = Color(171, 178, 191);
+	Color endColor = Color(255, 0, 0);
+
+	float ratio = (float)life / 100;
+
+	int r = startColor.r + (endColor.r - startColor.r) * ratio;
+	int g = startColor.g + (endColor.g - startColor.g) * ratio;
+	int b = startColor.b + (endColor.b - startColor.b) * ratio;
+
+	return Color(r, g, b);
+}
+
 void GameScene::Initialize()
 {
-	ifstream json_dir("map.json");
+	ifstream json_dir(mapFile);
+	
 	Json::CharReaderBuilder builder;
 	builder["collectComments"] = false;
 
@@ -33,7 +50,7 @@ void GameScene::Initialize()
 		cout << "Parse failed.: " << errs << endl;
 	}
 
-	musicAudio.Open(L"anima.mp3");
+	musicAudio.Open(mp3File);
 
 	lineColor[0] = Color::DefaultForgroundColor;
 	lineColor[1] = { 66, 135, 245 };
@@ -51,7 +68,7 @@ void GameScene::Initialize()
 void GameScene::Run()
 {
 	int prevTime = startTime;
-	while (true)
+	while (!IsEnded)
 	{
 		deltaTime = clock() - prevTime;
 		if (deltaTime > 1000 / 144)
@@ -72,7 +89,14 @@ int GameScene::GetMusicTime()
 void GameScene::ComboBreak()
 {
 	combo = 0;
-	life -= 10;
+	life -= 5;
+}
+
+GameScene::GameScene(wstring mp3File, string mapFile, int speed)
+{
+	this->mp3File = mp3File;
+	this->mapFile = mapFile;
+	this->offset = speed;
 }
 
 void GameScene::CheckLine(int line)
@@ -86,37 +110,43 @@ void GameScene::CheckLine(int line)
 
 			if (diffTime < 18) // marvelous
 			{
+				ShowEffect(0, line);
 				AddLife(1);
 				score += 350;
 				judgeStore[0]++;
 			}
 			else if (diffTime < 43) // perfect
 			{
+				ShowEffect(1, line);
 				AddLife(1);
 				score += 300;
 				judgeStore[1]++;
 			}
 			else if (diffTime < 76) // great
 			{
+				ShowEffect(2, line);
 				score += 100;
 				judgeStore[2]++;
 			}
 			else if (diffTime < 106) // good
 			{
+				ShowEffect(3, line);
 				score += 50;
 				judgeStore[3]++;
 			}
 			else if (diffTime < 127) // okay
 			{
+				ShowEffect(4, line);
 				score += 20;
 				judgeStore[4]++;
 			}
-			else if (diffTime < 164) // miss
+			else if (diffTime < 180) // miss
 			{
 				if (noteObject.time - musicTime < 0)
 				{
 					continue;
 				}
+				ShowEffect(5, line);
 				ComboBreak();
 				judgeStore[5]++;
 			}
@@ -145,18 +175,44 @@ void GameScene::Update()
 {
 	testTime = clock();
 	fps = 1000.0f / deltaTime;
-	
-	if (life <= 0)
-	{
-		// musicAudio.Stop();
-	}
 
-	if (musicTime >= 0)
+	int musicPos = musicAudio.GetPosition();
+	if (life <= 0 || musicPos >= musicAudio.GetLength())
+	{
+		if (musicAudio.IsPlaying())
+			musicAudio.Stop();
+		IsEnded = true;
+		musicAudio.Close();
+
+		Console::Clear();
+		
+		Console::SetCursorPosition({ 0, 25 });
+		Console::AlignedPrint(TextAlign::Center, L"Game Over");
+		Console::SetCursorPosition({ 0, 27 });
+		Console::AlignedPrint(TextAlign::Center, L"Score: " + to_wstring(score));
+		Console::SetCursorPosition({ 0, 28 });
+		Console::AlignedPrint(TextAlign::Center, L"Max Combo: " + to_wstring(maxCombo));
+
+		Console::SetCursorPosition({ 0, 30 });
+		Console::AlignedPrint(TextAlign::Center, L"Press [ Enter ] to continue");
+		
+		while (true)
+		{
+			if (GetAsyncKeyState(VK_RETURN))
+			{
+				break;
+			}
+		}
+
+		FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+		int _ = _getch();
+	}
+	else if (musicTime >= 0)
 	{
 		if (!musicAudio.IsPlaying())
 			musicAudio.Play();
 		else
-			musicTime = musicAudio.GetPosition();
+			musicTime = musicPos;
 	}
 	else
 	{
@@ -187,9 +243,19 @@ void GameScene::Update()
 	{
 		if (noteObjects[i].IsDead)
 		{
+			ShowEffect(5, noteObjects[i].line);
 			ComboBreak();
 			judgeStore[5]++;
 			noteObjects.erase(noteObjects.begin() + i);
+		}
+	}
+
+	for (int i = 0; i < effects.size(); i++)
+	{
+		effects[i].Update(deltaTime);
+		if (effects[i].IsEnded)
+		{
+			effects.erase(effects.begin() + i);
 		}
 	}
 
@@ -260,16 +326,18 @@ string getSpace(int count)
 
 void GameScene::Render()
 {
-	Console::SetCursorPosition({ 2, 1 });
-	cout << "FPS: " << fps << "           ";
-	
+	if (IsEnded) return;
+	/*Console::SetCursorPosition({ 2, 1 });
+	cout << "FPS: " << fps << "           \n  ";
+	cout << "Effects: " << effects.size() << "           ";*/
+
 	Console::SetCursorPosition({ 100, 22 });
 	cout << "Score: " << score;
 	Console::SetCursorPosition({ 100, 24 });
 	cout << "Combo: " << combo << "       ";
 	Console::SetCursorPosition({ 100, 26 });
 	cout << "MaxCombo: " << maxCombo;
-	
+
 	Console::SetCursorPosition({ 100, 30 });
 	cout << "Marv: " << judgeStore[0];
 	Console::SetCursorPosition({ 100, 32 });
@@ -283,21 +351,26 @@ void GameScene::Render()
 	Console::SetCursorPosition({ 100, 40 });
 	cout << "Miss: " << judgeStore[5];
 
-	//for (int i = 30; i >= 0; i--)
-	//{
-	//	if (life / 3.3333 > i)
-	//		Console::SetBackgroundColor({ 100, 100, 100 });
-	//	else
-	//		Console::SetBackgroundColor({ 50, 50, 50 });
+	for (auto effect : effects)
+	{
+		effect.Render();
+	}
 
-	//	Console::SetCursorPosition({ 82, 15 + 30 - i });
-	//	cout << "  ";
-	//}
-	//Console::SetBackgroundColor(Color::DefaultBackgroundColor);
-
-	Console::SetCursorPosition({ 20, judgePos });
 	for (int i = 0; i < 4; i++)
 	{
+		bool isRendered = false;
+		for (auto effect : effects)
+		{
+			if (effect.line == i)
+			{
+				isRendered = true;
+				break;
+			}
+		}
+
+		if (isRendered) continue;
+
+		Console::SetCursorPosition({ 20 + 15 * i, judgePos });
 		if (keys[i] == KeyState::Stay)
 		{
 			Console::SetBackgroundColor({ 102, 107, 115 });
@@ -310,9 +383,19 @@ void GameScene::Render()
 	}
 	Console::SetBackgroundColor(Color::DefaultBackgroundColor);
 
+	Color color;
+	if (combo < 10)
+		color = Color::DefaultForgroundColor;
+	else if (combo < 50)
+		color = { 255, 255, 100 };
+	else if (combo < 100)
+		color = { 100, 255, 255 };
+	else
+		color = { 255, 100, 255 };
+
 	for (int i = noteObjects.size() - 1; i >= 0; i--)
 	{
-		noteObjects[i].Render(lineColor[noteObjects[i].line]);
+		noteObjects[i].Render(ColorGradiant(life));
 		//if (noteObject.lastDiffTime < 18)
 		//	noteObject.Render({ 255, 0, 0 });
 		//else 
@@ -322,7 +405,46 @@ void GameScene::Render()
 
 void GameScene::AddLife(int life)
 {
-	life += life;
-	if (life > 100)
-		life = 100;
+	this->life += life;
+	if (this->life > 100)
+		this->life = 100;
+}
+
+void GameScene::ShowEffect(int type, int line)
+{
+	Color color;
+	switch (type)
+	{
+	case 0:
+		color = { 255, 255, 255 };
+		break;
+	case 1:
+		color = { 245, 197, 66 };
+		break;
+	case 2:
+		color = { 7, 199, 0 };
+		break;
+	case 3:
+		color = { 0, 69, 173 };
+		break;
+	case 4:
+		color = { 74, 74, 74 };
+		break;
+	case 5:
+		color = { 189, 0, 0 };
+		break;
+	default:
+		break;
+	}
+
+	for (int i = 0; i < effects.size(); i++)
+	{
+		if (effects[i].line == line)
+		{
+			effects[i].time = 0;
+		}
+	}
+
+	Effect effect(color, Color::DefaultForgroundColor, line, 500);
+	effects.push_back(effect);
 }

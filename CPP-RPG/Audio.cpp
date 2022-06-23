@@ -14,14 +14,14 @@ void Audio::Open(wstring fileName)
 {
 	openParms.lpstrElementName = fileName.c_str();
 	openParms.lpstrDeviceType = L"mpegvideo";
-	openParms.wDeviceID = 0x00;
+	openParms.wDeviceID = 0;
 	
-	showMciError(mciSendCommand(0, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE | MCI_OPEN_SHAREABLE, (DWORD_PTR)&openParms));
+	showMciError(mciSendCommand(openParms.wDeviceID, MCI_OPEN, MCI_OPEN_ELEMENT | MCI_OPEN_TYPE | MCI_OPEN_SHAREABLE, (DWORD_PTR)&openParms));
 }
 
 void Audio::Close()
 {
-	showMciError(mciSendCommand(0, MCI_CLOSE, 0, 0));
+	showMciError(mciSendCommand(openParms.wDeviceID, MCI_CLOSE, 0, 0));
 }
 
 void Audio::Play()
@@ -68,6 +68,14 @@ bool Audio::IsPlaying()
 	statusParms.dwItem = MCI_STATUS_MODE;
 	showMciError(mciSendCommand(openParms.wDeviceID, MCI_STATUS, MCI_STATUS_ITEM, (DWORD_PTR)&statusParms));
 	return statusParms.dwReturn == MCI_MODE_PLAY;
+}
+
+int Audio::GetLength()
+{
+	MCI_STATUS_PARMS statusParms;
+	statusParms.dwItem = MCI_STATUS_LENGTH;
+	showMciError(mciSendCommand(openParms.wDeviceID, MCI_STATUS, MCI_STATUS_ITEM, (DWORD_PTR)&statusParms));
+	return statusParms.dwReturn;
 }
 
 void Audio::showMciError(DWORD dwError)

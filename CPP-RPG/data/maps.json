@@ -1,0 +1,40 @@
+{
+    "maps": [
+        {
+            "title": "ANiMA",
+            "mp3File": "data\\anima\\anima.mp3",
+            "difficulties": [
+                {
+                    "difficulty": "Easy",
+                    "mapFile": "data\\anima\\anima_easy.json"
+                },
+                {
+                    "difficulty": "Medium",
+                    "mapFile": "data\\anima\\anima_medium.json"
+                },
+                {
+                    "difficulty": "Hard",
+                    "mapFile": "data\\anima\\anima_hard.json"
+                }
+            ]
+        },
+        {
+            "title": "Bakugou",
+            "mp3File": "data\\bakugou\\bakugou.mp3",
+            "difficulties": [
+                {
+                    "difficulty": "Easy",
+                    "mapFile": "data\\bakugou\\bakugou_easy.json"
+                },
+                {
+                    "difficulty": "Medium",
+                    "mapFile": "data\\bakugou\\bakugou_medium.json"
+                },
+                {
+                    "difficulty": "Hard",
+                    "mapFile": "data\\bakugou\\bakugou_hard.json"
+                }
+            ]
+        }
+    ]
+}

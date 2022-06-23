@@ -27,5 +27,6 @@ public:
 	void SetPosition(int position);
 	int GetPosition();
 	bool IsPlaying();
+	int GetLength();
 };
 

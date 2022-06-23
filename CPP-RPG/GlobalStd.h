@@ -13,6 +13,7 @@
 #include <Digitalv.h>
 #include <string>
 #include <algorithm>
+#include <limits>
 #include "json/json.h"
 
 #pragma comment(lib, "user32")
