@@ -19,20 +19,38 @@
             ]
         },
         {
-            "title": "Bakugou",
-            "mp3File": "data\\bakugou\\bakugou.mp3",
+            "title": "BLACK or WHITE?",
+            "mp3File": "data\\black-or-white\\black-or-white.mp3",
             "difficulties": [
                 {
                     "difficulty": "Easy",
-                    "mapFile": "data\\bakugou\\bakugou_easy.json"
+                    "mapFile": "data\\black-or-white\\black-or-white_easy.json"
                 },
                 {
                     "difficulty": "Medium",
-                    "mapFile": "data\\bakugou\\bakugou_medium.json"
+                    "mapFile": "data\\black-or-white\\black-or-white_medium.json"
                 },
                 {
                     "difficulty": "Hard",
-                    "mapFile": "data\\bakugou\\bakugou_hard.json"
+                    "mapFile": "data\\black-or-white\\black-or-white_hard.json"
+                }
+            ]
+        },
+        {
+            "title": "Blastix Riotz",
+            "mp3File": "data\\blastix-riotz\\riotzz.mp3",
+            "difficulties": [
+                {
+                    "difficulty": "Easy",
+                    "mapFile": "data\\blastix-riotz\\blastix-riotz_easy.json"
+                },
+                {
+                    "difficulty": "Medium",
+                    "mapFile": "data\\blastix-riotz\\blastix-riotz_medium.json"
+                },
+                {
+                    "difficulty": "Hell",
+                    "mapFile": "data\\blastix-riotz\\blastix-riotz_hell.json"
                 }
             ]
         }

@@ -138,9 +138,10 @@ void MenuScene::DifficultySelect(Map map)
 		Console::Clear();
 		string str = map.title + " - " + map.difficulties[selected].difficulty;;
 		wstring wstr = wstring(str.begin(), str.end());
-		GameScene gameScene = GameScene(wstr, mp3File, mapFile, speed);
-		gameScene.Initialize();
-		gameScene.Run();
+		GameScene* gameScene = new GameScene(wstr, mp3File, mapFile, speed);
+		gameScene->Initialize();
+		gameScene->Run();
+		delete(gameScene);
 	}
 
 	void MenuScene::Render()
