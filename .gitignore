@@ -429,3 +429,34 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+CPP-Rhythm/data/maps.json
+CPP-Rhythm/data/angelic-jelly/Angelic Jelly.mp3
+CPP-Rhythm/data/angelic-jelly/angelic-jelly_easy.json
+CPP-Rhythm/data/angelic-jelly/angelic-jelly_hard.json
+CPP-Rhythm/data/angelic-jelly/angelic-jelly_medium.json
+CPP-Rhythm/data/anima/anima_easy.json
+CPP-Rhythm/data/anima/anima_hard.json
+CPP-Rhythm/data/anima/anima_medium.json
+CPP-Rhythm/data/anima/anima_normal.json
+CPP-Rhythm/data/anima/anima.mp3
+CPP-Rhythm/data/asian-distractive/asian-distractive_easy.json
+CPP-Rhythm/data/asian-distractive/asian-distractive_hard.json
+CPP-Rhythm/data/asian-distractive/asian-distractive_medium.json
+CPP-Rhythm/data/asian-distractive/audio.mp3
+CPP-Rhythm/data/black-or-white/black-or-white_easy.json
+CPP-Rhythm/data/black-or-white/black-or-white_hard.json
+CPP-Rhythm/data/black-or-white/black-or-white_medium.json
+CPP-Rhythm/data/black-or-white/black-or-white_normal.json
+CPP-Rhythm/data/black-or-white/black-or-white.mp3
+CPP-Rhythm/data/blastix-riotz/blastix-riotz_easy.json
+CPP-Rhythm/data/blastix-riotz/blastix-riotz_hard.json
+CPP-Rhythm/data/blastix-riotz/blastix-riotz_hell.json
+CPP-Rhythm/data/blastix-riotz/riotzz.mp3
+CPP-Rhythm/data/chrono-diver -pendulums-/27.Chrono Diver -PENDULUMs-.mp3
+CPP-Rhythm/data/chrono-diver -pendulums-/chrono-diver -pendulums-_easy.json
+CPP-Rhythm/data/chrono-diver -pendulums-/chrono-diver -pendulums-_hard.json
+CPP-Rhythm/data/chrono-diver -pendulums-/chrono-diver -pendulums-_medium.json
+CPP-Rhythm/data/lemon-summer/LEMON SUMMER.mp3
+CPP-Rhythm/data/lemon-summer/lemon-summer_easy.json
+CPP-Rhythm/data/lemon-summer/lemon-summer_hard.json
+CPP-Rhythm/data/lemon-summer/lemon-summer_medium.json

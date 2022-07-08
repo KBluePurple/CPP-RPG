@@ -191,7 +191,7 @@ void GameScene::Update()
 		Console::SetCursorPosition({ 0, 23 });
 		Console::AlignedPrint(TextAlign::Center, mapName);
 		Console::SetCursorPosition({ 0, 25 });
-		Console::AlignedPrint(TextAlign::Center, L"Game Over");
+		Console::AlignedPrint(TextAlign::Center, life > 0 ? L"Clear!" : L"Game Over");
 		Console::SetCursorPosition({ 0, 27 });
 		Console::AlignedPrint(TextAlign::Center, L"Score: " + to_wstring(score));
 		Console::SetCursorPosition({ 0, 28 });
@@ -240,7 +240,7 @@ void GameScene::Update()
 		}
 
 		FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
-		int _ = _getch();
+		_getch();
 	}
 	else if (musicTime >= 0)
 	{

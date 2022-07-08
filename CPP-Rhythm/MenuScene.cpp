@@ -41,13 +41,13 @@ void MenuScene::Initialize()
 
 void MenuScene::Run()
 {
-	Sleep(1000);
 	int selected = 0;
+	Console::Clear();
 
 	while (true)
 	{
 		Console::SetCursorPosition({ 40, 10 });
-		cout << "[W] [S] 로 이동, [Enter] 로 선택";
+		cout << "[↑] [↓] 로 이동, [Enter] 로 선택";
 
 		for (int i = 0; i < maps.size(); i++)
 		{
@@ -59,21 +59,24 @@ void MenuScene::Run()
 			cout << maps[i].title;
 			Console::SetTextColor(Color::DefaultForgroundColor);
 		}
-
+		
 		switch (_getch())
 		{
-		case 'w':
-			selected--;
-			if (selected < 0)
+		case 224:
+			switch (_getch())
 			{
-				selected = maps.size() - 1;
-			}
-			break;
-		case 's':
-			selected++;
-			if (selected >= maps.size())
-			{
-				selected = 0;
+			case 72:
+				if (selected > 0)
+				{
+					selected--;
+				}
+				break;
+			case 80:
+				if (selected < maps.size() - 1)
+				{
+					selected++;
+				}
+				break;
 			}
 			break;
 		case VK_RETURN:
@@ -89,13 +92,14 @@ void MenuScene::Update()
 
 void MenuScene::DifficultySelect(Map map)
 {
+	Console::Clear();
 	bool back = false;
 	int selected = 0;
 
 	while (!back)
 	{
 		Console::SetCursorPosition({ 40, 10 });
-		cout << "[W] [S] 로 이동, [Enter] 로 선택";
+		cout << "[↑] [↓] 로 이동, [Enter] 로 선택, [ESC] 로 돌아가기";
 
 		for (int i = 0; i < map.difficulties.size(); i++)
 		{
@@ -110,18 +114,21 @@ void MenuScene::DifficultySelect(Map map)
 
 		switch (_getch())
 		{
-		case 'w':
-			selected--;
-			if (selected < 0)
+		case 224:
+			switch (_getch())
 			{
-				selected = map.difficulties.size() - 1;
-			}
-			break;
-		case 's':
-			selected++;
-			if (selected >= map.difficulties.size())
-			{
-				selected = 0;
+			case 72:
+				if (selected > 0)
+				{
+					selected--;
+				}
+				break;
+			case 80:
+				if (selected < map.difficulties.size() - 1)
+				{
+					selected++;
+				}
+				break;
 			}
 			break;
 		case VK_RETURN:
@@ -129,8 +136,12 @@ void MenuScene::DifficultySelect(Map map)
 			Console::Clear();
 			return;
 			break;
+		case VK_ESCAPE:
+			back = true;
+			break;
 		}
 	}
+	Console::Clear();
 }
 
 	void MenuScene::LoadScene(wstring mp3File, string mapFile, Map map, int selected)
