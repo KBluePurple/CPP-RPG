@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Global.h"
+#include "GlobalStd.h"
 
 class Player
 {

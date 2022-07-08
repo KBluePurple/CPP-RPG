@@ -68,12 +68,10 @@ Vector2 Console::GetCursorPosition()
 	return position;
 }
 
-COORD coord = {};
 void Console::SetCursorPosition(Vector2 position)
 {
-	coord.X = position.x;
-	coord.Y = position.y;
-	SetConsoleCursorPosition(StdOutHandle, coord);
+	COORD coord = { position.x, position.y };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 }
 
 void Console::Clear()
@@ -104,10 +102,12 @@ void Console::SetUTF8(bool utf8)
 
 void Console::Initialize()
 {	
+	// 헨들 받기
 	HWND hwnd = GetConsoleWindow();
 	StdOutHandle = GetStdHandle(STD_OUTPUT_HANDLE);
 	HANDLE hInConsole = GetStdHandle(STD_INPUT_HANDLE);
 
+	// 폰트 설정
 	CONSOLE_FONT_INFOEX cfi = {};
 	cfi.cbSize = sizeof(cfi);
 	cfi.nFont = 0;
@@ -118,19 +118,24 @@ void Console::Initialize()
 	wcscpy_s(cfi.FaceName, L"Consolas");
 	SetCurrentConsoleFontEx(GetStdHandle(STD_OUTPUT_HANDLE), FALSE, &cfi);
 
+	// 색 출력 설정
 	DWORD dwMode;
 	GetConsoleMode(StdOutHandle, &dwMode);
 	dwMode |= ENABLE_VIRTUAL_TERMINAL_PROCESSING;
 	SetConsoleMode(StdOutHandle, dwMode);
 
+	// 기본 색 설정
 	SetTextColor(Color::DefaultForgroundColor);
 	SetBackgroundColor(Color::DefaultBackgroundColor);
 
+	// 윈도우 스타일 설정
 	LONG Style = GetWindowLong(hwnd, GWL_STYLE);
 	SetWindowLong(hwnd, GWL_STYLE, Style & ~WS_TILEDWINDOW);
 
+	// 전체화면
 	::SendMessage(::GetConsoleWindow(), WM_SYSKEYDOWN, VK_RETURN, 0x20000000);
 
+	// 입력 설정
 	GetConsoleMode(hInConsole, &dwMode);
 	dwMode |= ENABLE_WINDOW_INPUT;
 	dwMode |= ENABLE_MOUSE_INPUT;
@@ -138,6 +143,7 @@ void Console::Initialize()
 	dwMode &= ~ENABLE_QUICK_EDIT_MODE;
 	SetConsoleMode(hInConsole, dwMode);
 
+	// 빠른 출력 설정
 	ios_base::sync_with_stdio(false);
 	cin.tie(nullptr);
 	cout.tie(nullptr);
@@ -219,6 +225,11 @@ Vector2 Console::GetCenter(Vector2 background, Vector2 foreground)
 	center.y = (background.y - foreground.y) / 2;
 
 	return center;
+}
+
+void Console::Write(string str)
+{
+	fwrite(str.c_str(), sizeof(char), str.size(), stdout);
 }
 
 void Console::SetColor(Color color, bool isForeground)

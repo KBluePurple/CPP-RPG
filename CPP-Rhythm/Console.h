@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Global.h"
+#include "GlobalStd.h"
 
 enum class TextAlign
 {
@@ -39,6 +39,8 @@ public:
 	static Vector2 GetCenter(Vector2 background, Vector2 foreground);
 	
 	static Vector2 Scale;
+
+	static void Write(string str);
 	
 private:
 	static void SetColor(Color color, bool isForeground);

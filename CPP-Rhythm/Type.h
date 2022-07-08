@@ -6,6 +6,14 @@ public:
 	int r;
 	int g;
 	int b;
+	
+	Color()
+	{
+		r = 0;
+		g = 0;
+		b = 0;
+	}
+		
 	Color(int r, int g, int b)
 	{
 		this->r = r;
@@ -143,6 +151,33 @@ public:
 	bool operator!=(Vector2 v)
 	{
 		return x != v.x || y != v.y;
+	}
+};
+
+class FVector2
+{
+	public:
+	float x;
+	float y;
+	FVector2(float x, float y)
+	{
+		this->x = x;
+		this->y = y;
+	}
+
+	bool operator==(FVector2 v)
+	{
+		return x == v.x && y == v.y;
+	}
+
+	bool operator!=(FVector2 v)
+	{
+		return x != v.x || y != v.y;
+	}
+
+	Vector2 ToVector2()
+	{
+		return Vector2((int)x, (int)y);
 	}
 };
 

@@ -1,5 +1,5 @@
 #pragma once
-#include "Global.h"
+#include "GlobalStd.h"
 
 template<typename T>
 struct Generator {
